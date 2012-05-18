@@ -16,6 +16,15 @@
 
 	echo("Creating tables database...<br/>");
 	mysql_query("CREATE TABLE IF NOT EXISTS `pages` ( `ID` int NOT NULL PRIMARY KEY AUTO_INCREMENT, `Title` text NOT NULL, `Data` text NOT NULL )");
+	mysql_query("CREATE TABLE IF NOT EXISTS `users` ( 
+ `ID` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+ `username` text NOT NULL,
+ `email` text NOT NULL,
+ `password` text NOT NULL,
+ `salt` text NOT NULL,
+ `admin` bool NOT NULL
+ )");
+
 	
 	$FirstPageQuery = "INSERT INTO `pages` (`ID`, `Title` ,`Data`) VALUES ('', 'First Page!', 'Hello and Welcome to your first page in Cayde Dixon''s CMS!')";
 
