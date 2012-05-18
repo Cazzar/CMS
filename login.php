@@ -20,6 +20,7 @@ if (!isset($_POST['username'])) {
 	  </div>
 	</form>
 	<?php
+	die();
 }
 
 	$link = mysql_connect($config['mysql_host'], $config['mysql_user'], $config['mysql_password']);
