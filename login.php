@@ -29,10 +29,10 @@ if (!isset($_POST['username'])) {
 		die ('Can\'t use database : ' . mysql_error());
 	}
 
-	$FirstPageQuery = "SELECT * FROM `users` WHERE Username=" . mysql_real_escape_string($_POST['username']) ;
+	$query = "SELECT * FROM `users` WHERE Username='" . mysql_real_escape_string($_POST['username']) . "'" ;
 
 	// Perform Query
-	$result = mysql_query($FirstPageQuery);
+	$result = mysql_query($query);
 	
 	// Check result
 	// This shows the actual query sent to MySQL, and the error. Useful for debugging.
@@ -41,6 +41,7 @@ if (!isset($_POST['username'])) {
 	    $message .= 'Whole query: ' . $FirstPageQuery;
 	    die($message);
 	}
+
 	while ($row = mysql_fetch_assoc($result)) {
 	    $username = $row['username'];
 	    $password = $row['password'];
@@ -48,17 +49,15 @@ if (!isset($_POST['username'])) {
 	    $admin    = $row['admin'];
 	    $ID       = $row['ID'];
 	}
-	
+
 	if (hash('sha512', $_POST['password'] . $salt) != $password)
 	{
 		echo ("invalid password");
+		die();
 	}
 	session_start();
 	
 	$_SESSION['ID']       = $ID;
 	$_SESSION['admin']    = $admin;
 	$_SESSION['username'] = $username;
-	echo "Login Successful!";
-
-
-
+	echo "Login Successful! <br/> Welcome, " . $username;
