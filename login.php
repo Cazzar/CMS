@@ -53,6 +53,15 @@ if (!isset($_POST['username'])) {
 	if (hash('sha512', $_POST['password'] . $salt) != $password)
 	{
 		echo ("invalid password");
+		?>
+	<form method="POST" action="<?php echo $_SERVER['php_self']; ?>">
+	  Username: <input type="text" name="username" size="15" /><br />
+	  Password: <input type="password" name="password" size="15" /><br />
+	  <div align="center">
+	    <p><input type="submit" value="Login" /></p>
+	  </div>
+	</form>
+<?php
 		die();
 	}
 	session_start();

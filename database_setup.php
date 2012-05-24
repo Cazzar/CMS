@@ -26,7 +26,7 @@
  )");
 	//username: admin, password: password
 	mysql_query("INSERT INTO `users` (`ID`, `username`, `email`, `password`, `salt`, `admin`) VALUES
-(1, 'admin', 'admin@example.com', 'fd6ca1e3d777e86678e8c8a7d9a2eea2de51756284a8ddd0352b102e004dcc367fcf469610e20c380bef61332841da60d9a20be994d697aff4fa4f181c4cfe7f', 'GgaFG', 1)"
+(1, 'admin', 'admin@example.com', 'fd6ca1e3d777e86678e8c8a7d9a2eea2de51756284a8ddd0352b102e004dcc367fcf469610e20c380bef61332841da60d9a20be994d697aff4fa4f181c4cfe7f', 'GgaFG', 1)");
 
 	
 	$FirstPageQuery = "INSERT INTO `pages` (`ID`, `Title` ,`Data`) VALUES ('', 'First Page!', 'Hello and Welcome to your first page in Cayde Dixon''s CMS!')";
