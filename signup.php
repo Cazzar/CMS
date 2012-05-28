@@ -1,5 +1,6 @@
 <html>
 <head>
+	<title><?php echo($config['cms_name']); ?> - Sign Up</title>
 </head>
 <body>
 <?php
@@ -18,7 +19,7 @@
 	)
 	{
 ?>
-       <form method="POST" action="<?php echo $_SERVER['php_self']; ?>">
+        <form method="POST" action="<?php echo $_SERVER['php_self']; ?>">
 	  Username: <input type="text" name="username" size="15" /><br />
 	  Password: <input type="password" name="password" size="15" /><br />
 	  Again: <input type="password" name="password_confirm" size="15" /><br />
