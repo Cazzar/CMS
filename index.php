@@ -2,7 +2,8 @@
 	// CMS for basic website
 	define(IN_CMS, 1);	
 	require_once("config.php");
-
+	session_start();
+	
 	$id = 1;
 
 	if (isset($_GET['pageid'])) {
@@ -41,4 +42,5 @@
 	
 	<body>
 <?php
+	if (isset($_SESSION['username'])) { echo "<B>Hello, " . $_SESSION['username'] . "</b><br/>"; }
 	echo $page;

@@ -69,4 +69,4 @@ if (!isset($_POST['username'])) {
 	$_SESSION['ID']       = $ID;
 	$_SESSION['admin']    = $admin;
 	$_SESSION['username'] = $username;
-	echo "Login Successful! <br/> Welcome, " . $username;
+	echo "Login Successful! <br/> Welcome, " . $_SESSION['username'];
