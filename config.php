@@ -9,5 +9,5 @@ $config['mysql_user']			= "cms";
 $config['mysql_password']		= "cms";
 
 $config['cms_name']			= "CMS 10";
-$config['admin_only_add_users']		= false;
+$config['admin_only_add_users']		= true;
 $config['admin_only_add_pages']		= true;

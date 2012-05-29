@@ -1,18 +1,18 @@
 <?php
-	define(IN_CMS, 1);	
-	require_once("config.php");
+//	define(IN_CMS, 1);	
+//	require_once("config.php");
 
 ?>
-<html>
+<!--<html>
 	<head>
 		<title><?php echo($config['cms_name']); ?> - Login</title>
-	</head>
+	</head>-->
 	
 	<body>
 <?php
 if (!isset($_POST['username'])) {
 	?>
-	<form method="POST" action="<?php echo $_SERVER['php_self']; ?>">
+	<form method="POST" action="index.php?do=login">
 	  Username: <input type="text" name="username" size="15" /><br />
 	  Password: <input type="password" name="password" size="15" /><br />
 	  <div align="center">
@@ -54,7 +54,7 @@ if (!isset($_POST['username'])) {
 	{
 		echo ("invalid password");
 		?>
-	<form method="POST" action="<?php echo $_SERVER['php_self']; ?>">
+	<form method="POST" action="index.php?do=login">
 	  Username: <input type="text" name="username" size="15" /><br />
 	  Password: <input type="password" name="password" size="15" /><br />
 	  <div align="center">
@@ -64,9 +64,11 @@ if (!isset($_POST['username'])) {
 <?php
 		die();
 	}
-	session_start();
+	header("Refresh: 3; url=\"index.php\"");
+	//session_start();
 	
 	$_SESSION['ID']       = $ID;
 	$_SESSION['admin']    = $admin;
 	$_SESSION['username'] = $username;
-	echo "Login Successful! <br/> Welcome, " . $_SESSION['username'];
+	echo "Login Successful! <br/> Welcome, " . $_SESSION['username'] . "<br/>";
+ echo "You will be redirected to in 3 seconds...";

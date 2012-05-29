@@ -1,12 +1,12 @@
-<html>
+<!--<html>
 <head>
 	<title><?php echo($config['cms_name']); ?> - Sign Up</title>
-</head>
+</head>-->
 <body>
 <?php
-	session_start();
-	define(IN_CMS, 1);
-	require_once("config.php");
+//	session_start();
+	//define(IN_CMS, 1);
+	//require_once("config.php");
 	if (
 		(!$config["admin_only_add_users"]
 			 || ($config["admin_only_add_users"] && $_SESSION['admin'])
@@ -17,9 +17,10 @@
 		     && isset($_POST['username'])
 		)
 	)
+	require_once('header.php');
 	{
 ?>
-        <form method="POST" action="<?php echo $_SERVER['php_self']; ?>">
+        <form method="POST" action="index.php?do=signup">
 	  Username: <input type="text" name="username" size="15" /><br />
 	  Password: <input type="password" name="password" size="15" /><br />
 	  Again: <input type="password" name="password_confirm" size="15" /><br />

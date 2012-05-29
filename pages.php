@@ -10,14 +10,18 @@ function curPageURL() {
  }
  return $pageURL;
 }
+function IsNullOrEmptyString($question){
+    return (!isset($question) || trim($question)==='');
+}
+
 	
-	define(IN_CMS, 1);	
-	require_once("config.php");
+//	define(IN_CMS, 1);	
+//	require_once("config.php");
 ?>
-<html>
+<!--<html>
 	<head>
 		<title><?php echo($config['cms_name']); ?> - Page List</title>
-	</head>
+	</head>-->
 	
 	<body>
 <?php
@@ -46,6 +50,7 @@ function curPageURL() {
 	    $text = substr(strip_tags($row['Data'], "<b><i>"), 0, 50);
 
 	    if (strlen($text) == 50) $text .= "...";
-	    $arr = explode(basename(__FILE__), curPageURL());
-            echo "<a href=" . $arr[0] . "?pageid=" . $ID . ">" . $title . "</a> &nbsp - " . $text . " <br/>";
+	    //$arr = explode(basename(__FILE__), curPageURL());
+	    //if (!IsNullOrEmptyString($arr[0]))
+            echo "<a href=index.php?do=view&pageid=" . $ID . ">" . $title . "</a> &nbsp - " . $text . " <br/>";
 	}

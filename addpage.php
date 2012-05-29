@@ -1,12 +1,12 @@
 <?php
-	session_start();
-	define("IN_CMS", 1);
-	require_once("config.php");
+	//session_start();
+	//define("IN_CMS", 1);
+	//require_once("config.php");
 ?>
 <html>
-	<head>
+	<!--<head>
 		<title><?php echo($config['cms_name']); ?> - Add new page</title>
-	</head>
+	</head>-->
 	
 	<body>
 	<?php
@@ -17,7 +17,7 @@
 	{
 	?>
 
-        <form method="POST" action="<?php echo $_SERVER["SCRIPT_NAME"]; ?>">
+        <form method="POST" action="index.php?do=addpage">
 	  Page Title: <input type="text" name="title" size="10" /><br />
 	  Page Content: 
 	  <div align="center">

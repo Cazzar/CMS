@@ -1,46 +1,25 @@
 <?php
-	// CMS for basic website
-	define(IN_CMS, 1);	
-	require_once("config.php");
-	session_start();
-	
-	$id = 1;
-
-	if (isset($_GET['pageid'])) {
-		//set for a default if the PID in URL is null.
-		$id = $_GET['pageid'];
-	}
-		
-	$link = mysql_connect($config['mysql_host'], $config['mysql_user'], $config['mysql_password']);
-	$database = mysql_select_db($config['mysql_database'], $link);
-	if (!$database) {
-		die ('Can\'t use database : ' . mysql_error());
-	}
-
-	$FirstPageQuery = "SELECT * FROM `pages` WHERE ID=" . mysql_real_escape_string($id) ;
-
-	// Perform Query
-	$result = mysql_query($FirstPageQuery);
-	
-	// Check result
-	// This shows the actual query sent to MySQL, and the error. Useful for debugging.
-	if (!$result) {
-	    $message  = 'Invalid query: ' . mysql_error() . "<br/>";
-	    $message .= 'Whole query: ' . $FirstPageQuery;
-	    die($message);
-	}
-	while ($row = mysql_fetch_assoc($result)) {
-	    $title = $row['Title'];
-	    $page = $row['Data'];
-	}
+define(IN_CMS, 1);
+require_once("config.php");
+session_start();
+$ActionTitles = array('', 'Page List', 'Add new page', 'Login', 'Signup', 'Logout');
+$ValidActions = array('view', 'pages', 'addpage', 'login', 'signup', 'logout');
+$ActionPages   = array('viewpage.php', 'pages.php', 'addpage.php', 'login.php', 'signup.php', 'logout.php');
+$action = (isset($_GET['do'])) ? (in_array($_GET['do'], $ValidActions)) ? $_GET['do'] : $ValidActions[0] : $ValidActions[0];
+$actionKey = array_search($action, $ValidActions);
+echo "<html>";
+echo "\t<head>\n\t\t<link rel=\"stylesheet\" href=\"style.css\" type=\"text/css\" />";
+if ($actionKey != 0)
+{
 ?>
-
-<html>
-	<head>
-		<title><?php echo($config['cms_name']) . " - " . $title; ?></title>
+        	<title><?php echo $config['cms_name'] . " - " . $ActionTitles[$actionKey] ?></title>
 	</head>
-	
-	<body>
 <?php
-	if (isset($_SESSION['username'])) { echo "<B>Hello, " . $_SESSION['username'] . "</b><br/>"; }
-	echo $page;
+}
+
+require_once('header.php');
+
+
+require_once($ActionPages[$actionKey]);
+//echo $action . " " . $actionKey . " " . $ActionPages[$actionKey];
+
