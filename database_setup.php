@@ -22,13 +22,13 @@
  `email` VARCHAR(40) NOT NULL,
  `password` VARCHAR(255) NOT NULL,
  `salt` VARCHAR(10) NOT NULL,
- `admin` boolean NOT NULL
+ `usertype` boolean NOT NULL
  )");
 	mysql_query("ALTER TABLE `users` ADD UNIQUE (`username`,`email`)");
 
 
 	//username: admin, password: password
-	mysql_query("INSERT INTO `users` (`ID`, `username`, `email`, `password`, `salt`, `admin`) VALUES
+	mysql_query("INSERT INTO `users` (`ID`, `username`, `email`, `password`, `salt`, `usertype`) VALUES
 (1, 'admin', 'admin@example.com', 'fd6ca1e3d777e86678e8c8a7d9a2eea2de51756284a8ddd0352b102e004dcc367fcf469610e20c380bef61332841da60d9a20be994d697aff4fa4f181c4cfe7f', 'GgaFG', 1)");
 	echo  "User \"Admin\" has been added with the Password: \"password\"";
 

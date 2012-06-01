@@ -41,15 +41,14 @@ if (!isset($_POST['username'])) {
 	    $message .= 'Whole query: ' . $FirstPageQuery;
 	    die($message);
 	}
-
+        
 	while ($row = mysql_fetch_assoc($result)) {
 	    $username = $row['username'];
 	    $password = $row['password'];
 	    $salt     = $row['salt'];
-	    $admin    = $row['admin'];
-	    $ID       = $row['ID'];
+	    $usertype = (int) $row['usertype'];
+	    $ID       = (int) $row['ID'];
 	}
-
 	if (hash('sha512', $_POST['password'] . $salt) != $password)
 	{
 		echo ("invalid password");
@@ -66,9 +65,9 @@ if (!isset($_POST['username'])) {
 	}
 	header("Refresh: 3; url=\"index.php\"");
 	//session_start();
-	
-	$_SESSION['ID']       = $ID;
-	$_SESSION['admin']    = $admin;
+        	
+	$_SESSION['ID']       = (int) $ID;
+	$_SESSION['usertype'] = (int) $usertype;
 	$_SESSION['username'] = $username;
 	echo "Login Successful! <br/> Welcome, " . $_SESSION['username'] . "<br/>";
  echo "You will be redirected to in 3 seconds...";

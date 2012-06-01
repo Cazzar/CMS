@@ -9,7 +9,7 @@
 	//require_once("config.php");
 	if (
 		(!$config["admin_only_add_users"]
-			 || ($config["admin_only_add_users"] && $_SESSION['admin'])
+			 || ($config["admin_only_add_users"] && $_SESSION['usertype'] = 1)
 		)
 		&& !(isset($_POST['email']) 
 		     && isset($_POST['password_confirm'])
@@ -33,7 +33,7 @@
 die(); 
 } 
 
-	if ($config["admin_only_add_users"] && !($config["admin_only_add_users"] && $_SESSION['admin'] = "1") ) 
+	if ($config["admin_only_add_users"] && !($config["admin_only_add_users"] && $_SESSION['usertype'] = 1) ) 
 	{ die("You are not allowed to add users"); }
 
 	$link = mysql_connect($config['mysql_host'], $config['mysql_user'], $config['mysql_password']);
@@ -46,7 +46,7 @@ die();
 	$salt = rand_string(5);
 	$hashed_pw = hash('sha512', $_POST['password'] . $salt);
 
-	if (!mysql_query("INSERT INTO `users` (`ID`, `username`, `email`, `password`, `salt`, `admin`) VALUES
+	if (!mysql_query("INSERT INTO `users` (`ID`, `username`, `email`, `password`, `salt`, `usertype`) VALUES
 (NULL, '" . $_POST['username'] . "', '" . $_POST['email'] . "', '" . $hashed_pw . "', '" . $salt . "', " . "0" . ")"))
 	{
 		die("Error inserting user, maybe a duplicate username or email?");
@@ -68,16 +68,16 @@ die();
 
 	while ($row = mysql_fetch_assoc($result)) {
 	    $username = $row['username'];
-	    $password = $row['password'];
-	    $salt     = $row['salt'];
-	    $admin    = $row['admin'];
-	    $ID       = $row['ID'];
+	    //$password = $row['password'];
+	    //$salt     = $row['salt'];
+	    $usertype = (int) $row['usertype'];
+	    $ID       = (int) $row['ID'];
 	}
 
 	session_start();
 	
 	$_SESSION['ID']       = $ID;
-	$_SESSION['admin']    = $admin;
+	$_SESSION['usertype'] = $admin;
 	$_SESSION['username'] = $username;
 	echo "Signup Successful! <br/> Welcome, " . $username;
 	

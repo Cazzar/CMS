@@ -11,7 +11,7 @@
 	<body>
 	<?php
 	if
- 		(( !$config["admin_only_add_pages"] || ($config["admin_only_add_pages"] && $_SESSION['admin']) )
+ 		(( !$config["admin_only_add_pages"] || ($config["admin_only_add_pages"] && $_SESSION['usertype'] = 1) )
 		&& !(isset($_POST['title']) && isset($_POST['page']))
 	)	
 	{
