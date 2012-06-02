@@ -15,20 +15,21 @@ class User
 	function __construct($id)
 	{
 		$this->id = $id;
+		$this->loadData();
 	}
-	function LoadData()
+	function loadData()
 	{
 		require "config.php";
 		$dsn = "mysql://{$config['mysql_user']}:{$config['mysql_password']}@{$config['mysql_host']}/{$config['mysql_database']}";
 		$connection = DB::connect($dsn);
 		
 		if (DB::isError($connection))
-			die ($connection->getMessage());
+			return ($connection->getMessage());
 
 		$result = $connection->query("SELECT * FROM `users` WHERE ID='" . $this->id . "'");
 		
                 if (DB::isError($result))
-                        die ($result->getMessage());
+                        return ($result->getMessage());
 
 		while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC))
 		{
@@ -54,11 +55,11 @@ class User
                 $connection = DB::connect($dsn);
 
                 if (DB::isError($connection))
-                        die ($connection->getMessage());
+                        return ($connection->getMessage());
 		
                 $result = $connection->query($query);
                 if (DB::isError($result))
-                        die ($result->getMessage());
+                        return ($result->getMessage());
 	}
 	
 	function setUsername($username)
@@ -70,11 +71,11 @@ class User
                 $connection = DB::connect($dsn);
 
                 if (DB::isError($connection))
-                        die ($connection->getMessage());
+                        return ($connection->getMessage());
 
                 $result = $connection->query($query);
                 if (DB::isError($result))
-                        die ($result->getMessage());
+                        return ($result->getMessage());
 		
 		$this->username = $username;
         }
@@ -88,11 +89,11 @@ class User
                 $connection = DB::connect($dsn);
 
                 if (DB::isError($connection))
-                        die ($connection->getMessage());
+                        return ($connection->getMessage());
 
                 $result = $connection->query($query);
                 if (DB::isError($result))
-                        die ($result->getMessage());
+                        return ($result->getMessage());
 		
 		$this->usertype = $usertype;
         }
@@ -106,15 +107,63 @@ class User
                 $connection = DB::connect($dsn);
 
                 if (DB::isError($connection))
-                        die ($connection->getMessage());
+                        return ($connection->getMessage());
 
                 $result = $connection->query($query);
                 if (DB::isError($result))
-                        die ($result->getMessage());
+                        return ($result->getMessage());
 
                 $this->email = $email;
         }
+
+	function checkPassword($password)
+	{
+		require "config.php";
+                $dsn = "mysql://{$config['mysql_user']}:{$config['mysql_password']}@{$config['mysql_host']}/{$config['mysql_database']}";
+                $connection = DB::connect($dsn);
+
+                if (DB::isError($connection))
+                        return ($connection->getMessage());
+
+                $result = $connection->query("SELECT * FROM `users` WHERE ID='" . $this->id . "'");
+
+                if (DB::isError($result))
+                        return ($result->getMessage());
+		
+		$salt = "";
+		$pass = "";
+		
+                while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC))
+                {
+			$salt = $row['salt'];
+			$pass = $row['password'];
+                }
+		
+		return (hash('sha512', $password . $salt) == $pass);
+
+	}
 	
+	static function findUsersByName($name)
+	{
+		require "config.php";
+
+                $query = "SELECT `ID`  FROM `users` WHERE `username` = '{$name}'";
+                $dsn = "mysql://{$config['mysql_user']}:{$config['mysql_password']}@{$config['mysql_host']}/{$config['mysql_database']}";
+                $connection = DB::connect($dsn);
+
+                if (DB::isError($connection))
+                        return ($connection->getMessage());
+
+                $result = $connection->query($query);
+                if (DB::isError($result))
+                        return ($result->getMessage());
+		
+		while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC))
+                        return new User($row['ID']);
+
+		
+	}
+
 	private static function rand_string ($length) {
         	$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         	$size = strlen( $chars );
@@ -126,3 +175,7 @@ class User
 	}
 
 }
+
+#$user = User::findUsersByName("admin");
+
+#$user->setPassword('newpassword');

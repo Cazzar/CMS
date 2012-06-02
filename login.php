@@ -10,6 +10,7 @@
 	
 	<body>
 <?php
+require "user.php";
 if (!isset($_POST['username'])) {
 	?>
 	<form method="POST" action="index.php?do=login">
@@ -22,34 +23,23 @@ if (!isset($_POST['username'])) {
 	<?php
 	die();
 }
-
-	$link = mysql_connect($config['mysql_host'], $config['mysql_user'], $config['mysql_password']);
-	$database = mysql_select_db($config['mysql_database'], $link);
-	if (!$database) {
-		die ('Can\'t use database : ' . mysql_error());
-	}
-
-	$query = "SELECT * FROM `users` WHERE Username='" . mysql_real_escape_string($_POST['username']) . "'" ;
-
-	// Perform Query
-	$result = mysql_query($query);
+	$user = User::findUsersByName($_POST['username']);
 	
-	// Check result
-	// This shows the actual query sent to MySQL, and the error. Useful for debugging.
-	if (!$result) {
-	    $message  = 'Invalid query: ' . mysql_error() . "<br/>";
-	    $message .= 'Whole query: ' . $FirstPageQuery;
-	    die($message);
+	if (is_string($user))
+	{
+		echo ("invalid user");
+                ?>
+        <form method="POST" action="index.php?do=login">
+          Username: <input type="text" name="username" size="15" /><br />
+          Password: <input type="password" name="password" size="15" /><br />
+          <div align="center">
+            <p><input type="submit" value="Login" /></p>
+          </div>
+        </form>
+
 	}
-        
-	while ($row = mysql_fetch_assoc($result)) {
-	    $username = $row['username'];
-	    $password = $row['password'];
-	    $salt     = $row['salt'];
-	    $usertype = (int) $row['usertype'];
-	    $ID       = (int) $row['ID'];
-	}
-	if (hash('sha512', $_POST['password'] . $salt) != $password)
+	
+	if ($user->checkPassword($_POST['password']))
 	{
 		echo ("invalid password");
 		?>
@@ -66,8 +56,8 @@ if (!isset($_POST['username'])) {
 	header("Refresh: 3; url=\"index.php\"");
 	//session_start();
         	
-	$_SESSION['ID']       = (int) $ID;
-	$_SESSION['usertype'] = (int) $usertype;
-	$_SESSION['username'] = $username;
+	$_SESSION['ID']       = (int) $user->id;
+	$_SESSION['usertype'] = (int) $user->usertype;
+	$_SESSION['username'] = $user->username;
 	echo "Login Successful! <br/> Welcome, " . $_SESSION['username'] . "<br/>";
  echo "You will be redirected to in 3 seconds...";
