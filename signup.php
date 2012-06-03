@@ -76,13 +76,17 @@ die();
 */
 	require_once "user.php";
 	
-	User::create($_POST['username'], $_POST['email'], $_POST['password']);
+	$user = User::create($_POST['username'], $_POST['email'], $_POST['password']);
 	
+	if (is_string($user))
+	{
+		die ("Error adding User");
+	}
 	session_start();
 	
-	$_SESSION['ID']       = $ID;
-	$_SESSION['usertype'] = $admin;
-	$_SESSION['username'] = $username;
+	$_SESSION['ID']       = $user->id;
+	$_SESSION['usertype'] = $user->usertype;
+	$_SESSION['username'] = $user->username;
 	echo "Signup Successful! <br/> Welcome, " . $username;
 	
 	function rand_string( $length ) {
