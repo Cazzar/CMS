@@ -43,7 +43,7 @@ die();
 		die ('Error logging in cannot use database : ' . mysql_error());
 	}
 	
-	$salt = rand_string(5);
+/*	$salt = rand_string(5);
 	$hashed_pw = hash('sha512', $_POST['password'] . $salt);
 
 	if (!mysql_query("INSERT INTO `users` (`ID`, `username`, `email`, `password`, `salt`, `usertype`) VALUES
@@ -73,7 +73,11 @@ die();
 	    $usertype = (int) $row['usertype'];
 	    $ID       = (int) $row['ID'];
 	}
-
+*/
+	require_once "user.php";
+	
+	User::create($_POST['username'], $_POST['email'], $_POST['password']);
+	
 	session_start();
 	
 	$_SESSION['ID']       = $ID;

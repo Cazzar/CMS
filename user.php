@@ -115,7 +115,7 @@ class User
 
                 $this->email = $email;
         }
-
+	
 	function checkPassword($password)
 	{
 		require "config.php";
@@ -163,7 +163,39 @@ class User
 
 		
 	}
+	
+	static function create($name, $email, $password = "password", $usertype = 0)
+	{
+		require "config.php";
 
+                $query = "INSERT INTO `users` (`ID`, `username`, `email`, `password`, `salt`, `usertype`) VALUES
+(NULL, '{$name}', '{$email}', '', '', 0)";
+		$query1 = "SELECT * FROM `users` WHERE Username='{$name}'";
+                $dsn = "mysql://{$config['mysql_user']}:{$config['mysql_password']}@{$config['mysql_host']}/{$config['mysql_database']}";
+                $connection = DB::connect($dsn);
+
+                if (DB::isError($connection))
+                        return ($connection->getMessage());
+
+                $result = $connection->query($query);
+                if (DB::isError($result))
+                        return ($result->getMessage());
+		$result = $connection->query($query1);
+                if (DB::isError($result))
+                        return ($result->getMessage());
+
+		$user = null;
+                while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC))
+                        $user = new User($row['ID']);
+		
+		$user->setUsername($name);
+		$user->setEmail($email);
+		$user->setPassword($password);
+		$user->setUsertype($usertype);
+		
+		return $user;
+	}
+	
 	private static function rand_string ($length) {
         	$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         	$size = strlen( $chars );
@@ -175,7 +207,15 @@ class User
 	}
 
 }
-
+#Changing a user password and finding by name
 #$user = User::findUsersByName("admin");
-
 #$user->setPassword('newpassword');
+
+//Creating a user
+//$user = User::create('test', 'test@test.com');
+//if (is_string($user))
+//{
+//	echo $user;
+//	die();
+//}
+//echo $user->id;
