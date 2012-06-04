@@ -61,4 +61,4 @@ if (!isset($_POST['username'])) {
 	$_SESSION['usertype'] = (int) $user->usertype;
 	$_SESSION['username'] = $user->username;
 	echo "Login Successful! <br/> Welcome, " . $_SESSION['username'] . "<br/>";
- echo "You will be redirected to in 3 seconds...";
+	echo "You will be redirected to in 3 seconds...";
