@@ -232,7 +232,7 @@ class User
 }
 #Changing a user password and finding by name
 #$user = User::findUsersByName("admin");
-#$user->setPassword('newpassword');
+#$user->setPassword('password');
 
 //Creating a user
 //$user = User::create('test', 'test@test.com');

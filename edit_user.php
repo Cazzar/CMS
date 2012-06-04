@@ -2,10 +2,11 @@
 	$Usertypes = array( 0 => "Registered", 1 => "Admin", 2 => "Editor");
 	require "user.php";
 	$users = User::getAllUsers();
+	$currentUser = new User($_SESSION['ID']);
 	//$users = runQuery("SELECT * FROM `users` WHERE ID='1'");
-	if ($users[0]->usertype != 1){echo "Editing your user";}
-	else
-		$users = array(new User($_SESSION['ID']));
+	if ($currentUser->usertype == 1){echo "Editing your user";}
+		$users = array($currentUser);
+
 	if (isset($users[1]))
 	{
 		echo "<form method=\"POST\" action=\"index.php?do=edituser\"><select name=\"user\">";
