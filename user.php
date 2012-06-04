@@ -125,7 +125,7 @@ class User
         if (DB::isError($connection))
             return ($connection->getMessage());
 
-        $result = $connection->query("SELECT * FROM `users` WHERE ID='" . $this->id . "'");
+	$result = $connection->query("SELECT * FROM `users` WHERE ID='{$this->id}'");
 
         if (DB::isError($result))
             return ($result->getMessage());
@@ -160,6 +160,7 @@ class User
 		
 		while ($row = $result->fetchRow(DB_FETCHMODE_ASSOC))
             return new User($row['ID']);
+	return "No User Found";
 	}
 	
 	static function create($name, $email, $password = "password", $usertype = 0)

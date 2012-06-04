@@ -28,7 +28,7 @@ if (!isset($_POST['username'])) {
 	if (is_string($user))
 	{
 		echo ("invalid user");
-                ?>
+    ?>
         <form method="POST" action="index.php?do=login">
           Username: <input type="text" name="username" size="15" /><br />
           Password: <input type="password" name="password" size="15" /><br />
@@ -36,13 +36,14 @@ if (!isset($_POST['username'])) {
             <p><input type="submit" value="Login" /></p>
           </div>
         </form>
-
+	<?
+		die();
 	}
 	
 	if ($user->checkPassword($_POST['password']))
 	{
 		echo ("invalid password");
-		?>
+	?>
 	<form method="POST" action="index.php?do=login">
 	  Username: <input type="text" name="username" size="15" /><br />
 	  Password: <input type="password" name="password" size="15" /><br />
