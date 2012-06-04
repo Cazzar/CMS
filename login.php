@@ -40,7 +40,7 @@ if (!isset($_POST['username'])) {
 		die();
 	}
 	
-	if ($user->checkPassword($_POST['password']))
+	if (!$user->checkPassword($_POST['password']))
 	{
 		echo ("invalid password");
 	?>
