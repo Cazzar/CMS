@@ -67,39 +67,49 @@
         <?php
 	}
 
-	if (isset($_POST['username']))
+	if (isset($_POST['username']) && !empty($_POST['username']))
 	{
 		if (isset($users[1]) && isset($_POST['user']))
 		{
 			$user = new User($_POST['user']);
-			$user->setUsername($_POST['username']);
+			if ($user->username != $_POST['username'])
+				$user->setUsername($_POST['username']);
+		echo "username updated successfully<br/>";
 		}
 		else
 		{
-			$users[0]->setUsername($_POST['username']);
+			if ($users[0]->username != $_POST['username'])
+				$users[0]->setUsername($_POST['username']);
+		echo "username updated successfully<br/>";
 		}
 	}
-	if (isset($_POST['password']))
+	if (isset($_POST['password']) && !empty($_POST['password']))
 	{
         if (isset($users[1]) && isset($_POST['user']))
         {
         	$user = new User($_POST['user']);
         	$user->setPassword($_POST['password']);
+		echo "password updated successfully<br/>";
         }
         else
         {
         	$users[0]->setPassword($_POST['password']);
+		echo "password updated successfully<br/>";
         }
 	}
-	if (isset($_POST['email']))
+	if (isset($_POST['email']) && !empty($_POST['email']))
 	{
         if (isset($users[1]) && isset($_POST['user']))
         {
         	$user = new User($_POST['user']);
-        	$user->setEmail($_POST['email']);
+		if ($user->email != $_POST['email'])
+			$user->setEmail($_POST['email']);
+		echo "email updated successfully<br/>";
         }
         else
         {
-        	$users[0]->setEmail($_POST['email']);
+		if ($users[0]->email != $_POST['email'])
+			$users[0]->setEmail($_POST['email']);
+		echo "email updated successfully<br/>";
         }
 	}
