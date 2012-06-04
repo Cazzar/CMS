@@ -10,7 +10,7 @@
 	
 	<body>
 <?php
-require "user.php";
+//require "user.php";
 if (!isset($_POST['username'])) {
 	?>
 	<form method="POST" action="index.php?do=login">

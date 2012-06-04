@@ -1,6 +1,6 @@
 <?php
 	$Usertypes = array( 0 => "Registered", 1 => "Admin", 2 => "Editor");
-	require "user.php";
+//	require "user.php";
 	$users = User::getAllUsers();
 	$currentUser = new User($_SESSION['ID']);
 	//$users = runQuery("SELECT * FROM `users` WHERE ID='1'");

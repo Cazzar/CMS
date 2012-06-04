@@ -42,3 +42,7 @@
 <?php
 	require_once('header.php');
 	echo "<p>" . $page . "</p>";
+	if ($ThisUser->usertype == 1 || $ThisUser->usertype == 2)
+	{
+		echo '<a href="?do=editpage&pid=' . $id . '" class="editlink">Edit this page</a>';
+	}
